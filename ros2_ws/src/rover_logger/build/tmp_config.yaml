@@ -1,0 +1,14 @@
+
+level: warn
+max_queue: 2048
+sinks:
+  - type: terminal
+    colorize: false
+  - type: file
+    path: "/var/log/rover/rover.log"
+    rotation_bytes: 1048576
+    rotate_keep: 5
+    compress: true
+modules:
+  /drive: error
+  /vision: info

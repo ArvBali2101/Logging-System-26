@@ -1,0 +1,1 @@
+#include "rover_logger/file_rotation_adapter.hpp"
