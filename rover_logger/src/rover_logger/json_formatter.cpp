@@ -65,7 +65,6 @@ std::string iso8601_utc_ms(const LogMessage::clock::time_point& tp) {
 }
 
 std::string to_json_line(const LogMessage& msg) {
-  // Stable key order: ts, level, module, message
   std::string j;
   j.reserve(64 + msg.module.size() + msg.text.size());
   j += "{\"ts\":\"";
@@ -80,4 +79,4 @@ std::string to_json_line(const LogMessage& msg) {
   return j;
 }
 
-}  
+}  // namespace rover_logger

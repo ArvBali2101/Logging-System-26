@@ -7,12 +7,13 @@
 
 namespace rover_logger {
 
+// Immutable log payload that all sinks see.
 struct LogMessage {
   using clock = std::chrono::system_clock;
 
   LogLevel level;
-  std::string module;
-  std::string text;
+  std::string module;  // e.g. "/drive", "/vision"
+  std::string text;    // formatted log text
   clock::time_point ts;
 
   LogMessage(LogLevel lvl, std::string mod, std::string msg)
@@ -22,4 +23,4 @@ struct LogMessage {
         ts(clock::now()) {}
 };
 
-} 
+}  // namespace rover_logger

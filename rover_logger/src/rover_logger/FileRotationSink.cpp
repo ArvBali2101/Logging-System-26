@@ -1,11 +1,13 @@
 #include "rover_logger/FileRotationSink.h"
 
-
 #include <filesystem>
 #include <iostream>
 
-FileRotationSink::FileRotationSink(const std::string& base, size_t maxSize)
-    : baseFilename(base), maxFileSize(maxSize), fileIndex(0) {
+FileRotationSink::FileRotationSink(const std::string& base, std::size_t maxSize)
+    : baseFilename(base),
+      maxFileSize(maxSize),
+      fileIndex(0) {
+  // Initial file: base_0.log
   currentFile.open(baseFilename + "_0.log", std::ios::out | std::ios::trunc);
 }
 
@@ -19,14 +21,20 @@ void FileRotationSink::rotate() {
   if (currentFile.is_open()) {
     currentFile.close();
   }
-  fileIndex++;
+  ++fileIndex;
   std::string newFilename =
       baseFilename + "_" + std::to_string(fileIndex) + ".log";
   currentFile.open(newFilename, std::ios::out | std::ios::trunc);
 }
 
 void FileRotationSink::write(const std::string& message) {
-  if (!currentFile.is_open()) return;
+  if (!currentFile.is_open()) {
+    currentFile.open(baseFilename + "_" + std::to_string(fileIndex) + ".log",
+                     std::ios::out | std::ios::app);
+    if (!currentFile.is_open()) {
+      return;
+    }
+  }
 
   currentFile << message << std::endl;
 

@@ -15,13 +15,21 @@ std::shared_ptr<ILogSink> make_sink(const SinkConfig& cfg) {
 
   if (cfg.type == "file") {
     FileRotationAdapterOptions opt;
+
     opt.base_filename = cfg.path.value_or("rover_log");
-    opt.rotation_bytes = cfg.rotation_bytes.value_or(1u << 20);  // 1MB default
-    opt.format = AdaptFormat::JSON;  // JSON lines to disk
+
+    // Default 500 MB rotation if not specified in YAML.
+    const std::size_t default_rotation =
+        500ull * 1024ull * 1024ull;  // 500 MB
+
+    opt.rotation_bytes = cfg.rotation_bytes.value_or(default_rotation);
+    opt.format = AdaptFormat::JSON;
+
     return std::make_shared<FileRotationAdapter>(opt);
   }
 
   if (cfg.type == "network") {
+    // Placeholder – can be implemented later.
     throw std::runtime_error("Network sink not implemented in this build");
   }
 
@@ -37,4 +45,4 @@ std::vector<std::shared_ptr<ILogSink>> make_all_sinks(const LoggerConfig& cfg) {
   return out;
 }
 
-}  
+}  // namespace rover_logger

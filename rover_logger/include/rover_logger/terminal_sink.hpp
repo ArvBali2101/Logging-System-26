@@ -1,14 +1,20 @@
 #pragma once
+
 #include <mutex>
 #include <string>
 
+#include "rover_logger/log_level.hpp"
+#include "rover_logger/log_message.hpp"
 #include "rover_logger/logger.hpp"
 
 namespace rover_logger {
+
+// Writes human-readable logs to stdout with optional ANSI colours.
 class TerminalSink : public ILogSink {
  public:
-  explicit TerminalSink(bool colorize = true) : colorize_(colorize) {}
+  explicit TerminalSink(bool colorize);
 
+  // Core logging hook used by Logger
   void write(const LogMessage& msg) override;
   void flush() override {}
 
@@ -20,4 +26,4 @@ class TerminalSink : public ILogSink {
   std::mutex m_;
 };
 
-} 
+}  // namespace rover_logger

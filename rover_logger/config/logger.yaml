@@ -1,0 +1,20 @@
+level: info #Global logging level — everything below INFO is ignored unless a module overrides it.
+max_queue: 2048 ## Maximum number of queued log messages before dropping.
+
+sinks:
+  - type: terminal # Print logs to terminal
+    colorize: true # Use colored output
+
+  - type: file  # Write logs to rotating files
+    path: "rover_log"              # will generate rover_log_0.log, rover_log_1.log, ...
+    rotation_bytes: 524288000      # 500 MB per file
+
+modules:
+  /drive: warn    # Drive system only shows WARN, ERROR, FATAL
+  /vision: info   # Vision system shows INFO, WARN, ERROR, FATAL
+  /nav: debug     # Navigation subsystem logs everything (DEBUG and above)
+  # Add new subsystems here using the same name used in the C++ logger calls.
+  # Example:
+  #   /water_extraction: info
+  #
+  # This lets each subsystem control its own log verbosity independently.
