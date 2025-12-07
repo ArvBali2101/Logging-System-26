@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>rover_logger</name>
+  <version>0.0.1</version>
+  <description>Rover logging system with optional ROS2 bridge.</description>
+
+  <maintainer email="arv@example.com">Arv</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Core dependency -->
+  <depend>yaml-cpp</depend>
+
+  <!-- ROS2 bridge dependencies (optional at build time) -->
+  <exec_depend>rclcpp</exec_depend>
+  <exec_depend>rover_msgs</exec_depend>
+
+  <export></export>
+</package>
